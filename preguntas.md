@@ -1,8 +1,7 @@
 ## Dudas sobre el codigo
 
-__Como testeamos la concacafClasif?__
+__Como testeamos el resto de las clasificaciones?__
 
 Que debe retornar? 
-- Un array de teamsByConfed.CONCACAF objetos.
-- Todos los que esten en ese array tienen que ser de concacaf.
-- Tienen que estar si o si MEX, USA y CAN.
+- Un array de objetos con los 32 equipos clasificados.
+- Debe respetar las especificaciones de cantidad de equipos por confederacion
