@@ -10,10 +10,7 @@ function classification(confederation) {
       return
     }
   })
-  console.log(qualified.length)
   return qualified
 }
-
-classification("UEFA")
 
 export default classification;

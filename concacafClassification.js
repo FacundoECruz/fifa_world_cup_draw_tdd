@@ -1,6 +1,6 @@
 import { rankingFifa as allTeams, teamsByConfed } from "./fwcSpecifications.js";
 
-function concacafClasification() {
+function concacafClassification() {
   const hostsRequired = ["México", "Estados Unidos", "Canada"];
   const concacafTeams = allTeams.filter(team => team.confederation === "CONCACAF")
   let hosts = []
@@ -20,8 +20,7 @@ function concacafClasification() {
   const noHostsQualified = noHosts.slice(0, noHostsRequired);
   const concacafQualified = hosts.concat(noHostsQualified)
 
-  console.log(concacafQualified);
   return concacafQualified;
 }
 
-export default concacafClasification;
+export default concacafClassification;

@@ -1,4 +1,4 @@
-import concacafClasification from "./concacafClassification";
+import concacafClassification from "./concacafClassification";
 import classification from "./classifications";
 import { teamsByConfed } from "./fwcSpecifications";
 
@@ -13,18 +13,18 @@ function checkSameConfederation(qualified, confederation){
 
 describe("CONCACAF classification", () => {
   test("return the correct quantity of concacaf qualified teams", () => {
-    const concacafAllQualified = concacafClasification();
+    const concacafAllQualified = concacafClassification();
     expect(concacafAllQualified.length).toBe(teamsByConfed.CONCACAF);
   });
 
   test("check that all qualified are from concacaf", () => {
-    const concacafAllQualified = concacafClasification();
+    const concacafAllQualified = concacafClassification();
     const areAllFromConcacaf = checkSameConfederation(concacafAllQualified, "CONCACAF")
     expect(areAllFromConcacaf).toBe(true);
   });
 
   test("returned array should contains the hosts teams", () => {
-    const concacafAllQualified = concacafClasification();
+    const concacafAllQualified = concacafClassification();
     let namesOfTeams = [];
     concacafAllQualified.map((team) => {
       namesOfTeams.push(team.name);
