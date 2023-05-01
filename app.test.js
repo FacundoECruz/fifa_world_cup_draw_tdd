@@ -44,7 +44,7 @@ describe("CONCACAF classification", () => {
   });
 });
 
-describe("Classification of other confederations", () => {
+describe("Other confederations classification", () => {
   test("should return the correct quantity of qualified teams by confederation", () => {
     const conmebolQualified = classification("CONMEBOL")
     const uefaQualified = classification("UEFA")
@@ -71,3 +71,7 @@ describe("Classification of other confederations", () => {
     expect(areAllFromCaf).toBe(true)
   })
 });
+
+describe("draw fifa world cup groups", () => {
+  test.todo("should return an array for each group")
+})

@@ -1,5 +1,5 @@
 {
-  "type": "module",
+  "type": "commonjs",
   "name": "fifa_world_cup_draw_tdd",
   "version": "1.0.0",
   "description": "draw Fifa World Cup groups.",
