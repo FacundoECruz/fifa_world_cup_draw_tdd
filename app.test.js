@@ -1,6 +1,7 @@
 import concacafClassification from "./concacafClassification";
 import classification from "./classifications";
 import { teamsByConfed } from "./fwcSpecifications";
+import { setGroupsHead } from "./fwcDraw";
 
 function checkSameConfederation(qualified, confederation){
   let returnedQualifiedConfeds = []
@@ -73,8 +74,20 @@ describe("Other confederations classification", () => {
 });
 
 describe("fifa world cup draw", () => {
-  test.todo("returns an array containing an array for each group")
-  test.todo("returns an array where each group has a group head")
+  test.todo("returns an array of 32 qualified teams sorted by rank")
+  test("returns an array containing an array for each group where each one has a group head", () => {
+    const fwcGroups = setGroupsHead()
+    let groupsHeadsRank = []
+    fwcGroups.map((group) => {
+      groupsHeadsRank.push(group[0].rank)
+    })
+
+    const areAllGroupHead = groupsHeadsRank.every((rank) => rank < 9)
+
+    expect(fwcGroups.length).toBe(8)
+    expect(areAllGroupHead).toBe(true)
+  })
+
   test.todo("groups must cointain all UEFA qualified")
   test.todo("groups must contain all CONMEBOL qualified")
   test.todo("groups must contain all CONCACAF qualified")
