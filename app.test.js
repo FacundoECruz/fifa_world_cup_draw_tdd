@@ -72,6 +72,14 @@ describe("Other confederations classification", () => {
   })
 });
 
-describe("draw fifa world cup groups", () => {
-  test.todo("should return an array for each group")
+describe("fifa world cup draw", () => {
+  test.todo("returns an array containing an array for each group")
+  test.todo("returns an array where each group has a group head")
+  test.todo("groups must cointain all UEFA qualified")
+  test.todo("groups must contain all CONMEBOL qualified")
+  test.todo("groups must contain all CONCACAF qualified")
+  test.todo("groups must contain all AFC qualified")
+  test.todo("groups must contain all CAF qualified")
+  test.todo("groups must not contain teams from the same confederation (except UEFA)")
+  test.todo("groups must not contain more than two UEFA teams")
 })
