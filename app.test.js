@@ -1,7 +1,7 @@
 import concacafClassification from "./concacafClassification";
 import classification from "./classifications";
 import { teamsByConfed } from "./fwcSpecifications";
-import { setGroupsHead, allQualifiedTeams } from "./fwcDraw";
+import { setGroupsHead, allQualifiedTeams, setUEFAQualified } from "./fwcDraw";
 
 function checkSameConfederation(qualified, confederation){
   let returnedQualifiedConfeds = []
@@ -85,7 +85,7 @@ describe("fifa world cup draw", () => {
     }
   })
   test("returns an array containing an array for each group where each one has a group head", () => {
-    const fwcGroups = setGroupsHead()
+    const fwcGroups = setUEFAQualified()
     let groupsHeadsRank = []
     fwcGroups.map((group) => {
       groupsHeadsRank.push(group[0].rank)
@@ -97,7 +97,27 @@ describe("fifa world cup draw", () => {
     expect(areAllGroupHead).toBe(true)
   })
 
-  test.todo("groups must cointain all UEFA qualified")
+  test("groups must cointain all UEFA qualified and not more than 2 per group", () => {
+    let allGroups = setUEFAQualified()
+    console.log(allGroups)
+    let uefaQualified = []
+    let exceededUefaTeams = false
+    allGroups.map((group) => {
+      let uefaQty = 0;
+      group.map((team) => {
+        if(team.confederation === "UEFA"){
+          uefaQualified.push(team)
+          uefaQty = uefaQty + 1;
+        }
+      })
+      if(uefaQty >= 3){
+        exceededUefaTeams = true
+      }
+      expect(exceededUefaTeams).toBe(false)
+    })
+    expect(uefaQualified.length).toBe(teamsByConfed.UEFA)
+  })
+
   test.todo("groups must contain all CONMEBOL qualified")
   test.todo("groups must contain all CONCACAF qualified")
   test.todo("groups must contain all AFC qualified")
