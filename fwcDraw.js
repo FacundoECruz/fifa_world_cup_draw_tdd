@@ -49,4 +49,4 @@ function setGroupsHead() {
 
 setGroupsHead();
 
-export { setGroupsHead };
+export { setGroupsHead, allQualifiedTeams };
