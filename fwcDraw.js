@@ -57,4 +57,8 @@ function setUEFAQualified() {
   return fwcGroups
 }
 
+function restOfTheQualified(){
+  
+}
+
 export { setGroupsHead, allQualifiedTeams, setUEFAQualified };

@@ -118,7 +118,26 @@ describe("fifa world cup draw", () => {
     expect(uefaQualified.length).toBe(teamsByConfed.UEFA)
   })
 
-  test.todo("groups must contain all CONMEBOL qualified")
+  test("groups must contain all CONMEBOL qualified", () => {
+    const allGroups = restOfTheQualified()
+    let conmebolQualified = []
+    let exceededConmebolTeams = false
+    allGroups.map((group) => {
+      let conmebolQty = 0;
+      group.map((team) => {
+        if(team.confederation === "CONMEBOL"){
+          conmebolQualified.push(team)
+          conmebolQty = conmebolQty + 1;
+        }
+      })
+      if(conmebolQty >= 1){
+        exceededConmebolTeams = true
+      }
+      expect(exceededConmebolTeams).toBe(false)
+    })
+    expect(conmebolQualified.length).toBe(teamsByConfed.CONMEBOL)
+  })
+
   test.todo("groups must contain all CONCACAF qualified")
   test.todo("groups must contain all AFC qualified")
   test.todo("groups must contain all CAF qualified")
