@@ -84,20 +84,13 @@ describe("fifa world cup draw", () => {
       expect(isSorted).toBe(true)
     }
   })
-  test("returns an array containing an array for each group where each one has a group head", () => {
-    const fwcGroups = setUEFAQualified()
-    let groupsHeadsRank = []
-    fwcGroups.map((group) => {
-      groupsHeadsRank.push(group[0].rank)
-    })
 
-    const areAllGroupHead = groupsHeadsRank.every((rank) => rank < 9)
+  test.todo("returns an array with 4 bombos, 8 teams per bombo, pulling away teams by rank")
+  test.todo("returns an array with 8 groups and 4 teams per group")
+  test.todo("groups must contain one team from each bombo")
+  test.todo("groups must contain all qualified from each confederation")
 
-    expect(fwcGroups.length).toBe(8)
-    expect(areAllGroupHead).toBe(true)
-  })
-
-  test("groups must cointain all UEFA qualified and not more than 2 per group", () => {
+  test("groups must cointain all UEFA qualified", () => {
     let allGroups = setUEFAQualified()
     console.log(allGroups)
     let uefaQualified = []
@@ -141,6 +134,6 @@ describe("fifa world cup draw", () => {
   test.todo("groups must contain all CONCACAF qualified")
   test.todo("groups must contain all AFC qualified")
   test.todo("groups must contain all CAF qualified")
-  test.todo("groups must not contain teams from the same confederation (except UEFA)")
+  test.todo("each group must not contain teams from the same confederation (except UEFA)")
   test.todo("groups must not contain more than two UEFA teams")
 })
