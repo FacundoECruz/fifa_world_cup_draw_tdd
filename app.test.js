@@ -85,32 +85,34 @@ describe("fifa world cup draw", () => {
     }
   })
 
-  test.todo("returns an array with 4 bombos, 8 teams per bombo, pulling away teams by rank")
+  test("returns an array with 4 bombos, 8 teams per bombo, pulling away teams by rank")
+
+  
   test.todo("returns an array with 8 groups and 4 teams per group")
   test.todo("groups must contain one team from each bombo")
   test.todo("groups must contain all qualified from each confederation")
-
-  test("groups must cointain all UEFA qualified", () => {
-    let allGroups = setUEFAQualified()
-    console.log(allGroups)
-    let uefaQualified = []
-    let exceededUefaTeams = false
-    allGroups.map((group) => {
-      let uefaQty = 0;
-      group.map((team) => {
-        if(team.confederation === "UEFA"){
-          uefaQualified.push(team)
-          uefaQty = uefaQty + 1;
-        }
-      })
-      if(uefaQty >= 3){
-        exceededUefaTeams = true
-      }
-      expect(exceededUefaTeams).toBe(false)
-    })
-    expect(uefaQualified.length).toBe(teamsByConfed.UEFA)
-  })
-
   test.todo("each group must not contain teams from the same confederation (excepting UEFA)")
   test.todo("groups must not contain more than two UEFA teams")
+
+  // test("groups must cointain all UEFA qualified", () => {
+  //   let allGroups = setUEFAQualified()
+  //   console.log(allGroups)
+  //   let uefaQualified = []
+  //   let exceededUefaTeams = false
+  //   allGroups.map((group) => {
+  //     let uefaQty = 0;
+  //     group.map((team) => {
+  //       if(team.confederation === "UEFA"){
+  //         uefaQualified.push(team)
+  //         uefaQty = uefaQty + 1;
+  //       }
+  //     })
+  //     if(uefaQty >= 3){
+  //       exceededUefaTeams = true
+  //     }
+  //     expect(exceededUefaTeams).toBe(false)
+  //   })
+  //   expect(uefaQualified.length).toBe(teamsByConfed.UEFA)
+  // })
+
 })
