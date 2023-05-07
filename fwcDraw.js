@@ -27,4 +27,15 @@ function allQualifiedTeams() {
   return qualifiedSortedByRank;
 }
 
-export { allQualifiedTeams };
+let allQualified = allQualifiedTeams();
+
+function makeBombos() {
+  const bombos = [];
+  while (allQualified.length) {
+    let bombo = allQualified.splice(0, 8);
+    bombos.push(bombo);
+  }
+  return bombos;
+}
+
+export { allQualifiedTeams, makeBombos };

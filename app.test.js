@@ -1,7 +1,7 @@
 import concacafClassification from "./concacafClassification";
 import classification from "./classifications";
 import { teamsByConfed } from "./fwcSpecifications";
-import { setGroupsHead, allQualifiedTeams, setUEFAQualified } from "./fwcDraw";
+import { allQualifiedTeams, makeBombos } from "./fwcDraw";
 
 function checkSameConfederation(qualified, confederation){
   let returnedQualifiedConfeds = []
@@ -88,10 +88,10 @@ describe("fifa world cup draw", () => {
   test("returns an array with 4 bombos, 8 teams per bombo, pulling away teams by rank", () => {
     const bombos = makeBombos();
     expect(bombos.length).toBe(4)
-
+    
     let lastTeamInBomboRank = 0;
     let firstTeamInBomboRank = 0;
-
+    
     for (let i = 0; i < bombos.length; i++) {
       let bombo = bombos[i]
       expect(bombo.length).toBe(8)  
@@ -100,7 +100,7 @@ describe("fifa world cup draw", () => {
         let isSorted = firstTeamInBomboRank > lastTeamInBomboRank;
         expect(isSorted).toBe(true)
       }
-      lastTeamInBomboRank = bombo[-1].rank
+      lastTeamInBomboRank = bombo[7].rank
     }   
   })
 
