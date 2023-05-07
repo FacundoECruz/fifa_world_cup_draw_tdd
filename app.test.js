@@ -85,7 +85,24 @@ describe("fifa world cup draw", () => {
     }
   })
 
-  test("returns an array with 4 bombos, 8 teams per bombo, pulling away teams by rank")
+  test("returns an array with 4 bombos, 8 teams per bombo, pulling away teams by rank", () => {
+    const bombos = makeBombos();
+    expect(bombos.length).toBe(4)
+
+    let lastTeamInBomboRank = 0;
+    let firstTeamInBomboRank = 0;
+
+    for (let i = 0; i < bombos.length; i++) {
+      let bombo = bombos[i]
+      expect(bombo.length).toBe(8)  
+      firstTeamInBomboRank = bombo[0].rank
+      if(i !== 0){
+        let isSorted = firstTeamInBomboRank > lastTeamInBomboRank;
+        expect(isSorted).toBe(true)
+      }
+      lastTeamInBomboRank = bombo[-1].rank
+    }   
+  })
 
   
   test.todo("returns an array with 8 groups and 4 teams per group")
