@@ -162,7 +162,17 @@ describe("fifa world cup draw", () => {
     }
   );
 
-
-  test.todo("groups must not contain more than two UEFA teams");
+  test("groups must not contain more than two UEFA teams", () => {
+    groups.map((group) => {
+      let uefaQty = 0
+      group.map((team) => {
+        if(team.confederation === "UEFA") {
+          uefaQty = uefaQty + 1
+        }
+        let exceededUefaTeams = uefaQty > 2
+        expect(exceededUefaTeams).toBe(false)
+      })
+    })
+  });
 
 });
