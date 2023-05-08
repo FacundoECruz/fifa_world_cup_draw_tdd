@@ -28,9 +28,9 @@ function allQualifiedTeams() {
 }
 
 let allQualified = allQualifiedTeams();
+let bombos = []
 
 function makeBombos() {
-  const bombos = [];
   while (allQualified.length) {
     let bombo = allQualified.splice(0, 8);
     bombos.push(bombo);
@@ -38,4 +38,20 @@ function makeBombos() {
   return bombos;
 }
 
-export { allQualifiedTeams, makeBombos };
+function makeGroups() {
+  let fwcGroups = Array.from({ length: 8 }, () => []);
+
+  for (let i = 0; i < bombos.length; i++) {
+    for (let j = 0; j < fwcGroups.length; j++) {
+      let randomNum = getRandomInt(0, bombos[i].length)
+      let [selectedTeam] = bombos[i].splice(randomNum, 1)
+      fwcGroups[j].push(selectedTeam)
+    }
+  }
+  // console.log(fwcGroups)
+  return fwcGroups
+}
+
+// makeGroups()
+
+export { allQualifiedTeams, makeBombos, makeGroups };
