@@ -28,6 +28,7 @@ function allQualifiedTeams() {
 }
 
 let allQualified = allQualifiedTeams();
+let fwcGroups = Array.from({ length: 8 }, () => []);
 let bombos = []
 
 function makeBombos() {
@@ -39,7 +40,6 @@ function makeBombos() {
 }
 
 function makeGroups() {
-  let fwcGroups = Array.from({ length: 8 }, () => []);
 
   for (let i = 0; i < bombos.length; i++) {
     for (let j = 0; j < fwcGroups.length; j++) {
@@ -52,6 +52,7 @@ function makeGroups() {
   return fwcGroups
 }
 
+// makeBombos()
 // makeGroups()
 
 export { allQualifiedTeams, makeBombos, makeGroups };
