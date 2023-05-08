@@ -1,4 +1,4 @@
-import { makeBombos } from "./fwcBombos";
+import { makeBombos } from "./fwcBombos.js";
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -7,20 +7,42 @@ function getRandomInt(min, max) {
 }
 
 let fwcGroups = Array.from({ length: 8 }, () => []);
-let bombos = makeBombos()
+let bombos = makeBombos();
 
-function makeGroups() {
-  
-  for (let i = 0; i < bombos.length; i++) {
-    for (let j = 0; j < fwcGroups.length; j++) {
-      let randomNum = getRandomInt(0, bombos[i].length)
-      let [selectedTeam] = bombos[i].splice(randomNum, 1)
-      fwcGroups[j].push(selectedTeam)
+function areUefaExceeded(group){
+  let rejectedTeams = []
+  let uefaQty = 0
+  group.map((team) => {
+    if(team.confederation === "UEFA") {
+      uefaQty = uefaQty + 1
     }
-  }
-  return fwcGroups
+    if(uefaQty > 2 && team.confederation === "UEFA"){
+      rejectedTeams.push(team)
+    }
+  })
+  console.log(rejectedTeams)
+  return rejectedTeams
 }
 
-// makeGroups()
+function areOtherConfedsRepeated(group){
 
-export {makeGroups}
+}
+
+function makeGroups() {
+  for (let i = 0; i < bombos.length; i++) {
+    for (let j = 0; j < fwcGroups.length; j++) {
+      let randomNum = getRandomInt(0, bombos[i].length);
+      let [selectedTeam] = bombos[i].splice(randomNum, 1);
+      fwcGroups[j].push(selectedTeam);
+    }
+  }
+
+  for (let i = 0; i < fwcGroups.length; i++) {
+    let uefaRepeated = areUefaExceeded(fwcGroups[i])
+    let otherConfedRepeated = areOtherConfedsRepeated(fwcGroups[i])
+  }
+}
+
+makeGroups();
+// console.log(fwcGroups)
+export { makeGroups };
