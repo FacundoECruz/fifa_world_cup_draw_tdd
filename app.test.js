@@ -15,8 +15,9 @@ function checkSameConfederation(qualified, confederation) {
   return areAllFromGivenConfed;
 }
 
-let bombos = makeBombos()
-let groups = makeGroups()
+let allQualified = allQualifiedTeams();
+let bombos = makeBombos();
+let groups = makeGroups();
 
 describe("CONCACAF classification", () => {
   test("return the correct quantity of concacaf qualified teams", () => {
@@ -85,11 +86,8 @@ describe("Other confederations classification", () => {
   });
 });
 
-
 describe("fifa world cup bombos", () => {
-  
   test("returns an array of 32 qualified teams sorted by rank", () => {
-    let allQualified = allQualifiedTeams();
     for (let i = 0; i < allQualified.length - 1; i++) {
       let j = i + 1;
       let team1Rank = allQualified[i].rank;
@@ -125,53 +123,46 @@ describe("fifa world cup draw", () => {
       expect(groups[i].length).toBe(4);
     }
   });
-  
+
   test("groups must contain one team from each bombo", () => {
-    
-    let bombosRange = []
+    let bombosRange = [];
 
     bombos.map((bombo) => {
-      let firstTeamInBomboRank = bombo[0].rank
-      let lastTeamInBomboRank = bombo[7].rank
-      let bomboRange = [firstTeamInBomboRank, lastTeamInBomboRank]
-      bombosRange.push(bomboRange)
-    })
+      let firstTeamInBomboRank = bombo[0].rank;
+      let lastTeamInBomboRank = bombo[7].rank;
+      let bomboRange = [firstTeamInBomboRank, lastTeamInBomboRank];
+      bombosRange.push(bomboRange);
+    });
 
     groups.map((group) => {
-      for(let i = 0; i < group.length; i++) {
-        let teamRank = group[i].rank
-        let bomboRangeForTeam = bombosRange[i]
-        let isFromGivenBombo = teamRank >= bomboRangeForTeam[0] && teamRank <= bomboRangeForTeam[1]
-        expect(isFromGivenBombo).toBe(true)
+      for (let i = 0; i < group.length; i++) {
+        let teamRank = group[i].rank;
+        let bomboRangeForTeam = bombosRange[i];
+        let isFromGivenBombo =
+          teamRank >= bomboRangeForTeam[0] && teamRank <= bomboRangeForTeam[1];
+        expect(isFromGivenBombo).toBe(true);
       }
-    })
+    });
   });
 
-
-  test.todo("groups must contain all qualified from each confederation");
-  test.todo(
-    "each group must not contain teams from the same confederation (excepting UEFA)"
+  test(
+    "each group must not contain teams from the same confederation (excepting UEFA)", () => {
+      groups.map((group) => {
+        let groupConfeds = []
+        group.map((team) => {
+          if(team.confederation !== "UEFA") {
+            groupConfeds.push(team.confederation)
+          }
+        })
+        let repeatedConfeds = groupConfeds.filter((value, index, array) => array.indexOf(value) !== index)
+        let isRepeated = repeatedConfeds.length > 0
+        console.log(group)
+        expect(isRepeated).toBe(false)
+      })
+    }
   );
+
+
   test.todo("groups must not contain more than two UEFA teams");
 
-  // test("groups must cointain all UEFA qualified", () => {
-  //   let allGroups = setUEFAQualified()
-  //   console.log(allGroups)
-  //   let uefaQualified = []
-  //   let exceededUefaTeams = false
-  //   allGroups.map((group) => {
-  //     let uefaQty = 0;
-  //     group.map((team) => {
-  //       if(team.confederation === "UEFA"){
-  //         uefaQualified.push(team)
-  //         uefaQty = uefaQty + 1;
-  //       }
-  //     })
-  //     if(uefaQty >= 3){
-  //       exceededUefaTeams = true
-  //     }
-  //     expect(exceededUefaTeams).toBe(false)
-  //   })
-  //   expect(uefaQualified.length).toBe(teamsByConfed.UEFA)
-  // })
-})
+});
