@@ -1,7 +1,8 @@
 import concacafClassification from "./concacafClassification";
 import classification from "./classifications";
 import { teamsByConfed } from "./fwcSpecifications";
-import { allQualifiedTeams, makeBombos, makeGroups } from "./fwcDraw";
+import { allQualifiedTeams, makeBombos } from "./fwcBombos";
+import { makeGroups } from "./fwcDraw";
 
 function checkSameConfederation(qualified, confederation) {
   let returnedQualifiedConfeds = [];
@@ -13,6 +14,9 @@ function checkSameConfederation(qualified, confederation) {
   );
   return areAllFromGivenConfed;
 }
+
+let bombos = makeBombos()
+let groups = makeGroups()
 
 describe("CONCACAF classification", () => {
   test("return the correct quantity of concacaf qualified teams", () => {
@@ -82,7 +86,7 @@ describe("Other confederations classification", () => {
 });
 
 
-describe("fifa world cup draw", () => {
+describe("fifa world cup bombos", () => {
   
   test("returns an array of 32 qualified teams sorted by rank", () => {
     let allQualified = allQualifiedTeams();
@@ -96,7 +100,7 @@ describe("fifa world cup draw", () => {
   });
 
   test("returns an array with 4 bombos, 8 teams per bombo, pulling away teams by rank", () => {
-    let bombos = makeBombos();
+    // let bombos = makeBombos();
     expect(bombos.length).toBe(4);
     let lastTeamInBomboRank = 0;
     let firstTeamInBomboRank = 0;
@@ -112,9 +116,10 @@ describe("fifa world cup draw", () => {
       lastTeamInBomboRank = bombo[7].rank;
     }
   });
+});
 
+describe("fifa world cup draw", () => {
   test("returns an array with 8 groups and 4 teams per group", () => {
-    let groups = makeGroups();
     expect(groups.length).toBe(8);
     for (let i = 0; i < groups.length; i++) {
       expect(groups[i].length).toBe(4);
@@ -122,20 +127,24 @@ describe("fifa world cup draw", () => {
   });
   
   test("groups must contain one team from each bombo", () => {
-    let bombos = makeBombos()
-    let groups = makeGroups()
+    
     let bombosRange = []
-    
-    console.log(bombos)
-    
-    bombos.map(bombo => {
+
+    bombos.map((bombo) => {
       let firstTeamInBomboRank = bombo[0].rank
       let lastTeamInBomboRank = bombo[7].rank
       let bomboRange = [firstTeamInBomboRank, lastTeamInBomboRank]
       bombosRange.push(bomboRange)
     })
 
-    // console.log(`Bombos range: ${bombosRange}`)
+    groups.map((group) => {
+      for(let i = 0; i < group.length; i++) {
+        let teamRank = group[i].rank
+        let bomboRangeForTeam = bombosRange[i]
+        let isFromGivenBombo = teamRank >= bomboRangeForTeam[0] && teamRank <= bomboRangeForTeam[1]
+        expect(isFromGivenBombo).toBe(true)
+      }
+    })
   });
 
 
@@ -165,4 +174,4 @@ describe("fifa world cup draw", () => {
   //   })
   //   expect(uefaQualified.length).toBe(teamsByConfed.UEFA)
   // })
-});
+})
