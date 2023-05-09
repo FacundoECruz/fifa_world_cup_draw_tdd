@@ -7,6 +7,8 @@ function getRandomInt(min, max) {
 }
 
 function checkGroupAvailability(team, group) {
+  // console.log("***Group (in checkGroupAvailability)***")
+  // console.log(group)
   let uefaQty = 0;
   let otherConfedsInGroup = [];
   group.map((t) => {
@@ -29,18 +31,35 @@ function checkGroupAvailability(team, group) {
   }
 }
 
-function checkAvailableGroups(team, bombo, group) {
-  console.log("***inCheckAvailableGroups***");
-  console.log("***fwcGroups[group + 1]***");
-  console.log(fwcGroups[group + 1]);
-  console.log("***rejected team***");
-  console.log(team);
+function checkAvailableGroups(team, bomboIndex, groupIndex) {
+  // console.log("***inCheckAvailableGroups***");
+  // console.log("***fwcGroups(before swap)***")
+  // console.log(fwcGroups)
+  // console.log("***rejected team***");
+  // console.log(team);
+  
+  if(groupIndex < 0) {
+    // console.log("fwcGroups[groupIndex - 1]")
+    // console.log(fwcGroups[groupIndex - 1])
+    let [extractedTeam] = fwcGroups[groupIndex - 1].splice(bomboIndex, 1)
+    // console.log("***extractedTeam***")
+    // console.log(extractedTeam) 
+    fwcGroups[groupIndex - 1].push(team)
+    fwcGroups[groupIndex].push(extractedTeam)
+    // console.log("***fwcGroups***");
+    // console.log(fwcGroups);
+  } else{
+    // console.log("fwcGroups[groupIndex + 1]")
+    // console.log(fwcGroups[groupIndex + 1])
+    let [extractedTeam] = fwcGroups[groupIndex + 1].splice(bomboIndex, 1)
+    // console.log("***extractedTeam***")
+    // console.log(extractedTeam) 
+    fwcGroups[groupIndex + 1].push(team)
+    fwcGroups[groupIndex].push(extractedTeam)
+    // console.log("***fwcGroups(after swap)***");
+    // console.log(fwcGroups);
+  }
 
-  let [extractedTeam] = fwcGroups[group + 1].splice(bombo, 1)
-  console.log("***Extracted Team***")
-  console.log(extractedTeam)
-  fwcGroups[group + 1].push(team)
-  fwcGroups[group].push(extractedTeam)
 }
 
 let fwcGroups = Array.from({ length: 8 }, () => []);
@@ -65,7 +84,7 @@ function makeGroups() {
       if (isGroupAvailable) {
         fwcGroups[j].push(selectedTeam);
       } else {
-        let availableGroups = checkAvailableGroups(selectedTeam, i, j);
+        checkAvailableGroups(selectedTeam, i, j);
       }
     }
   }
