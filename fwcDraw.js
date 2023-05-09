@@ -6,33 +6,41 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-function areUefaExceeded(group) {
-  let rejectedTeams = [];
+function checkGroupAvailability(team, group) {
   let uefaQty = 0;
-  group.map((team) => {
-    if (team.confederation === "UEFA") {
+  let otherConfedsInGroup = [];
+  group.map((t) => {
+    if (t.confederation === "UEFA") {
       uefaQty = uefaQty + 1;
-    }
-    if (uefaQty > 2 && team.confederation === "UEFA") {
-      rejectedTeams.push(team);
+    } else {
+      otherConfedsInGroup.push(t.confederation);
     }
   });
-  return rejectedTeams;
+  if (team.confederation === "UEFA") {
+    if (uefaQty > 2) {
+      return false;
+    }
+    return true;
+  } else {
+    if (otherConfedsInGroup.includes(team.confederation)) {
+      return false;
+    }
+    return true;
+  }
 }
 
-function areOtherConfedsRepeated(group) {
-  let rejectedTeams = [];
-  let confedsInGroup = [];
-  group.map((team) => {
-    if (team.confederation !== "UEFA") {
-      let repeatedConfed = confedsInGroup.includes(team.confederation);
-      if (repeatedConfed) {
-        rejectedTeams.push(team);
-      }
-      confedsInGroup.push(team.confederation);
-    }
-  });
-  return rejectedTeams;
+function checkAvailableGroups(team, bombo, group) {
+  console.log("***inCheckAvailableGroups***");
+  console.log("***fwcGroups[group + 1]***");
+  console.log(fwcGroups[group + 1]);
+  console.log("***rejected team***");
+  console.log(team);
+
+  let [extractedTeam] = fwcGroups[group + 1].splice(bombo, 1)
+  console.log("***Extracted Team***")
+  console.log(extractedTeam)
+  fwcGroups[group + 1].push(team)
+  fwcGroups[group].push(extractedTeam)
 }
 
 let fwcGroups = Array.from({ length: 8 }, () => []);
@@ -40,50 +48,24 @@ let bombos = makeBombos();
 
 function makeGroups() {
   for (let i = 0; i < bombos.length; i++) {
+    console.log("*******ANOTHER BOMBO********");
     for (let j = 0; j < fwcGroups.length; j++) {
       let randomNum = getRandomInt(0, bombos[i].length);
       let [selectedTeam] = bombos[i].splice(randomNum, 1);
-      fwcGroups[j].push(selectedTeam);
-    }
-  }
 
-  let rejectedTeams = [];
+      let isGroupAvailable = checkGroupAvailability(selectedTeam, fwcGroups[j]);
 
-  for (let i = 0; i < fwcGroups.length; i++) {
-    let uefaRepeated = areUefaExceeded(fwcGroups[i]);
-    let otherConfedRepeated = areOtherConfedsRepeated(fwcGroups[i]);
-    if (uefaRepeated.length) {
-      uefaRepeated.map((team) => {
-        rejectedTeams.push(team);
-        let groupRejected = fwcGroups[i].splice(fwcGroups[i].indexOf(team), 1);
-      });
-    }
-    if (otherConfedRepeated.length) {
-      otherConfedRepeated.map((team) => {
-        rejectedTeams.push(team);
-        let groupRejected = fwcGroups[i].splice(fwcGroups[i].indexOf(team), 1);
-      });
-    }
-  }
-  // console.log("*****************");
-  // console.log("Last Rejected Team");
-  // console.log(rejectedTeams[rejectedTeams.length - 1]);
+      console.log("***Group***");
+      console.log(fwcGroups[j]);
+      console.log("***SelectedTeam***");
+      console.log(selectedTeam);
+      console.log("***isGroupAvailable***");
+      console.log(isGroupAvailable);
 
-  while (rejectedTeams.length) {
-    for (let j = 0; j < fwcGroups.length; j++) {
-      if (fwcGroups[j].length < 4) {
-        let confedsInGroup = [];
-        fwcGroups[j].map((team) => {
-          confedsInGroup.push(team.confederation);
-        });
-        console.log("*****Confeds In Group******")
-        console.log(confedsInGroup)
-        if (!confedsInGroup.includes(rejectedTeams[rejectedTeams.length - 1].confederation)) {
-          let [selectedTeam] = rejectedTeams.splice(rejectedTeams.length - 1, 1);
-          console.log("******Selected Team*******")
-          console.log(selectedTeam)
-          fwcGroups[j].push(selectedTeam);
-        }
+      if (isGroupAvailable) {
+        fwcGroups[j].push(selectedTeam);
+      } else {
+        let availableGroups = checkAvailableGroups(selectedTeam, i, j);
       }
     }
   }
